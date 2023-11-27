@@ -1,5 +1,5 @@
 ---
 - name: Restart NTP service
   service:
-    name: ntp
+    name: chronyd
     state: restarted

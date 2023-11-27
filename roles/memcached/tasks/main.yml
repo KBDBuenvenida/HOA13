@@ -12,10 +12,9 @@
   dnf:
     name: "{{ item }}"
     state: present
-    use_backend: dnf4
   loop:
     - memcached
-    - python-memcached
+    - python3-memcached
   when: ansible_distribution == "CentOS"
 
 - name: Start and enable Memcached service

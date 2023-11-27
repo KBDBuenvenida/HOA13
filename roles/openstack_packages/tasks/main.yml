@@ -20,26 +20,20 @@
 
 - name: Install RDO Repository on CentOS
   become: true
-  shell: dnf install -y https://rdoproject.org/repos/rdo-release.rpm
+  shell: dnf install -y https://rdoproject.org/repos/rdo-release.el8.rpm
   when: ansible_distribution == "CentOS"
+  ignore_errors: yes
 
 - name: Install OpenStack packages on CentOS
   dnf:
     name: "{{ item }}"
     state: present
-    use_backend: dnf4
   loop:
-    - python-openstackclient
+    - python3-openstackclient
     - openstack-keystone
-    - openstack-glance
-    - openstack-nova-api
-    - openstack-nova-conductor
-    - openstack-nova-console
-    - openstack-nova-novncproxy
-    - openstack-nova-scheduler
     - openstack-neutron
     - openstack-neutron-linuxbridge
-    - openstack-neutron-fwaas
     - openstack-neutron-bgp-dragent
     - openstack-neutron-dynamic-routing-common
+  ignore_errors: yes
   when: ansible_distribution == "CentOS"

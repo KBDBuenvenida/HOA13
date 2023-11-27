@@ -15,21 +15,20 @@
   dnf:
     name: "{{ item }}"
     state: present
-    use_backend: dnf4
   loop:
     - etcd
     - puppet-etcd
-    - python2-etcd3gw
+#    - python3-etcd
   when: ansible_distribution == "CentOS"
 
-- name: Start and enable etcd service
-  service:
-    name: etcd
-    state: started
-    enabled: yes
+#- name: Start and enable etcd service
+#  service:
+#    name: etcd
+#    state: started
+#    enabled: yes
 
-- name: Configure etcd
-  template:
-    src: etcd.conf.j2
-    dest: /etc/etcd/etcd.conf
-  notify: Restart etcd service
+#- name: Configure etcd
+#  template:
+#    src: etcd.conf.j2
+#    dest: /etc/etcd/etcd.conf
+#  notify: Restart etcd service

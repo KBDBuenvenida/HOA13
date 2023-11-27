@@ -12,10 +12,9 @@
   dnf:
     name: "{{ item }}"
     state: present
-    use_backend: dnf4
   loop:
     - mariadb-server
-    - MySQL-python
+    - python3-mysql
   when: ansible_distribution == "CentOS"
 
 - name: Start and enable the MariaDB service
@@ -24,38 +23,41 @@
     state: started
     enabled: yes
 
-- name: Secure MariaDB installation
-  mysql_user:
-    name: root
-    host: localhost
-    password: "2111419.!"
-    login_user: root
-    login_password: "2111419.!"
-    state: present
-    check_implicit_admin: yes
+#- name: Secure MariaDB installation
+#  mysql_user:
+#    name: root
+#    host: localhost
+#    password: "2111419.!"
+#    state: present
+#    check_implicit_admin: yes
+#    login_user: root
+#    login_password: "2111419.!"
+#    login_unix_socket: "{{ mysql_unix_socket }}"
+#  vars:
+#    mysql_unix_socket: "/var/run/mysqld/mysqld.sock"
 
-- name: Create OpenStack databases and users
-  mysql_db:
-    name: "{{ item.name }}"
-    state: present
-    login_user: root
-    login_password: "2111419.!"
-  with_items:
-    - { name: 'keystone', collation: 'utf8_general_ci', encoding: 'utf8' }
-    - { name: 'nova', collation: 'utf8_general_ci', encoding: 'utf8' }
-    - { name: 'neutron', collation: 'utf8_general_ci', encoding: 'utf8' }
-    - { name: 'glance', collation: 'utf8_general_ci', encoding: 'utf8' }
+#- name: Create OpenStack databases and users
+#  mysql_db:
+#    name: "{{ item.name }}"
+#    state: present
+#    login_user: root
+#    login_password: "2111419.!"
+#  with_items:
+#    - { name: 'keystone', collation: 'utf8_general_ci', encoding: 'utf8' }
+#    - { name: 'nova', collation: 'utf8_general_ci', encoding: 'utf8' }
+#    - { name: 'neutron', collation: 'utf8_general_ci', encoding: 'utf8' }
+#    - { name: 'glance', collation: 'utf8_general_ci', encoding: 'utf8' }
 
-- name: Create OpenStack database users
-  mysql_user:
-    name: "{{ item.name }}"
-    password: "{{ item.password }}"
-    priv: "{{ item.privileges }}"
-    state: present
-    login_user: root
-    login_password: "2111419.!"
-  with_items:
-    - { name: 'keystone', password: '2111419.!', privileges: '*.*:ALL' }
-    - { name: 'nova', password: '2111419.!', privileges: '*.*:ALL' }
-    - { name: 'neutron', password: '2111419.!', privileges: '*.*:ALL' }
-    - { name: 'glance', password: '2111419.!', privileges: '*.*:ALL' }
+#- name: Create OpenStack database users
+#  mysql_user:
+#    name: "{{ item.name }}"
+#    password: "{{ item.password }}"
+#    priv: "{{ item.privileges }}"
+#    state: present
+#    login_user: root
+#    login_password: "2111419.!"
+#  with_items:
+#    - { name: 'keystone', password: '2111419.!', privileges: '*.*:ALL' }
+#    - { name: 'nova', password: '2111419.!', privileges: '*.*:ALL' }
+#    - { name: 'neutron', password: '2111419.!', privileges: '*.*:ALL' }
+#    - { name: 'glance', password: '2111419.!', privileges: '*.*:ALL' }

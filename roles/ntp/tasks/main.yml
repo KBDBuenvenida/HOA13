@@ -7,9 +7,8 @@
 
 - name: Install NTP on CentOS
   dnf:
-    name: ntp
+    name: chrony
     state: present
-    use_backend: dnf4
   when: ansible_distribution == "CentOS"
 
 - name: Configure NTP servers

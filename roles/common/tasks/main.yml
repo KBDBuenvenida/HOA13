@@ -18,7 +18,6 @@
   dnf:
     name: '*'
     state: latest
-    use_backend: dnf4
   when: ansible_distribution == "CentOS"
 
 - name: Install common packages on CentOS
@@ -29,5 +28,4 @@
       - curl
       - wget
     state: present
-    use_backend: dnf4
   when: ansible_distribution == "CentOS"
